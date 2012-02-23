@@ -1,0 +1,246 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C125EFB014DA05D3005796D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C125EFAF14DA05D3005796D8 /* main.m */; };
+		C125EFB414DA05D3005796D8 /* Checkers.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C125EFB314DA05D3005796D8 /* Checkers.1 */; };
+		C125EFBC14DA063A005796D8 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = C125EFBB14DA063A005796D8 /* Game.m */; };
+		C125EFBF14DA0647005796D8 /* Piece.m in Sources */ = {isa = PBXBuildFile; fileRef = C125EFBE14DA0647005796D8 /* Piece.m */; };
+		C125EFC114DA2FA2005796D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125EFC014DA2FA2005796D8 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C125EFA614DA05D3005796D8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				C125EFB414DA05D3005796D8 /* Checkers.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C125EFA814DA05D3005796D8 /* Checkers */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Checkers; sourceTree = BUILT_PRODUCTS_DIR; };
+		C125EFAF14DA05D3005796D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C125EFB214DA05D3005796D8 /* Checkers-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Checkers-Prefix.pch"; sourceTree = "<group>"; };
+		C125EFB314DA05D3005796D8 /* Checkers.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Checkers.1; sourceTree = "<group>"; };
+		C125EFBA14DA063A005796D8 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		C125EFBB14DA063A005796D8 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		C125EFBD14DA0647005796D8 /* Piece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Piece.h; sourceTree = "<group>"; };
+		C125EFBE14DA0647005796D8 /* Piece.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Piece.m; sourceTree = "<group>"; };
+		C125EFC014DA2FA2005796D8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C125EFA514DA05D3005796D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C125EFC114DA2FA2005796D8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C125EF9D14DA05D3005796D8 = {
+			isa = PBXGroup;
+			children = (
+				C125EFAE14DA05D3005796D8 /* Checkers */,
+				C125EFAB14DA05D3005796D8 /* Frameworks */,
+				C125EFA914DA05D3005796D8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C125EFA914DA05D3005796D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C125EFA814DA05D3005796D8 /* Checkers */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C125EFAB14DA05D3005796D8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C125EFC014DA2FA2005796D8 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C125EFAE14DA05D3005796D8 /* Checkers */ = {
+			isa = PBXGroup;
+			children = (
+				C125EFAF14DA05D3005796D8 /* main.m */,
+				C125EFBA14DA063A005796D8 /* Game.h */,
+				C125EFBB14DA063A005796D8 /* Game.m */,
+				C125EFBD14DA0647005796D8 /* Piece.h */,
+				C125EFBE14DA0647005796D8 /* Piece.m */,
+				C125EFB314DA05D3005796D8 /* Checkers.1 */,
+				C125EFB114DA05D3005796D8 /* Supporting Files */,
+			);
+			path = Checkers;
+			sourceTree = "<group>";
+		};
+		C125EFB114DA05D3005796D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C125EFB214DA05D3005796D8 /* Checkers-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C125EFA714DA05D3005796D8 /* Checkers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C125EFB714DA05D3005796D8 /* Build configuration list for PBXNativeTarget "Checkers" */;
+			buildPhases = (
+				C125EFA414DA05D3005796D8 /* Sources */,
+				C125EFA514DA05D3005796D8 /* Frameworks */,
+				C125EFA614DA05D3005796D8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Checkers;
+			productName = Checkers;
+			productReference = C125EFA814DA05D3005796D8 /* Checkers */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C125EF9F14DA05D3005796D8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = C125EFA214DA05D3005796D8 /* Build configuration list for PBXProject "Checkers" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C125EF9D14DA05D3005796D8;
+			productRefGroup = C125EFA914DA05D3005796D8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C125EFA714DA05D3005796D8 /* Checkers */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C125EFA414DA05D3005796D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C125EFB014DA05D3005796D8 /* main.m in Sources */,
+				C125EFBC14DA063A005796D8 /* Game.m in Sources */,
+				C125EFBF14DA0647005796D8 /* Piece.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C125EFB514DA05D3005796D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C125EFB614DA05D3005796D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C125EFB814DA05D3005796D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Checkers/Checkers-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C125EFB914DA05D3005796D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Checkers/Checkers-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C125EFA214DA05D3005796D8 /* Build configuration list for PBXProject "Checkers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C125EFB514DA05D3005796D8 /* Debug */,
+				C125EFB614DA05D3005796D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C125EFB714DA05D3005796D8 /* Build configuration list for PBXNativeTarget "Checkers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C125EFB814DA05D3005796D8 /* Debug */,
+				C125EFB914DA05D3005796D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C125EF9F14DA05D3005796D8 /* Project object */;
+}

@@ -127,7 +127,7 @@
 
 - (void)simulateGame:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps
 {
-    for (int m = 1; m <= 3; m++) 
+    for (int m = 1; m <= 100; m++) 
     {
         if (gameOver == FALSE)
         {
@@ -241,33 +241,51 @@
 #pragma mark - method(s) to move/jump
 
 - (void)evaluateOptions:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(NSString *)player
-{
-    [self saveCurrentState];
-    
-    int value = [self alphaBetaSearch:limboBoard :limboMoves :limboJumps :player];
-    
-    NSLog(@"%i", value);
-    NSLog(@"%@", ratedOptions);
-    
-    for (NSString *ratedOption in ratedOptions) 
-    {
-        if ([[ratedOption substringWithRange:NSMakeRange(0, 1)] intValue] == value) 
-        { 
-            if (jumps.count != 0) [self makeJump:board :moves :jumps :(int)[ratedOptions indexOfObject:ratedOption]];
-            else [self makeMove:board :moves :(int)[ratedOptions indexOfObject:ratedOption]];
+{   
+//    if ([player isEqualToString:@"red"]) {
+//        [self setLimboObjects];
+//    
+//        int value = [self alphaBetaSearch:limboBoard :limboMoves :limboJumps :player];
+//        
+//        //NSLog(@"VALUE IS: %i", value);
+//        //NSLog(@"RATED OPTIONS ARE: %@", ratedOptions);
+//    
+//        int numberOfDigits = (int)[[NSString stringWithFormat:@"%i ", value] length];
+//    
+//        for (NSString *ratedOption in ratedOptions) 
+//        {
+//            if ([[ratedOption substringWithRange:NSMakeRange(0, numberOfDigits)] intValue] == value) 
+//            { 
+//                if (jumps.count != 0) [self makeJump:board :moves :jumps :(int)[ratedOptions indexOfObject:ratedOption]];
+//                else [self makeMove:board :moves :(int)[ratedOptions indexOfObject:ratedOption]];
+//            
+//                break;
+//            }
+//        }
+//    
+//        [ratedOptions removeAllObjects];
+//   } else if ([player isEqualToString:@"white"]) {
+        NSLog(@"OTHER PLAYERS JUMPS ARE: %@", jumps);
+        NSLog(@"OTHER PLAYERS MOVES ARE: %@", moves);
+        
+        if ([jumps count] != 0) {
+            int userInput;
+            scanf("%i", &userInput);
             
-            break;
+            [self makeJump:board :moves :jumps :userInput];
+        } else {
+            int userInput;
+            scanf("%i", &userInput);
+            
+            [self makeMove:board :moves :userInput];
         }
-    }
-    
-    [ratedOptions removeAllObjects];
+//    }
 }
 
 - (void)makeMove:(NSMutableArray *)board :(NSMutableArray *)moves :(int)index
 {
     NSString *move = [moves objectAtIndex:index];
-    //NSLog(@"make move: %@", move);
-    
+ 
     int a = [[move substringWithRange:NSMakeRange(0, 1)] intValue];
     int b = [[move substringWithRange:NSMakeRange(2, 1)] intValue];
     
@@ -294,8 +312,7 @@
 - (void)makeJump:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(int)index
 {
     NSString *jump = [jumps objectAtIndex:index];
-    //NSLog(@"make jump: %@", jump);
-    
+
     int a = [[jump substringWithRange:NSMakeRange(0, 1)] intValue];
     int b = [[jump substringWithRange:NSMakeRange(2, 1)] intValue];
     
@@ -333,7 +350,7 @@
 
 #pragma mark - method(s) for decision making
 
-- (void)saveCurrentState 
+- (void)setLimboObjects
 { 
     NSData *currentBoardBuffer = [NSKeyedArchiver archivedDataWithRootObject:currentBoard];
     limboBoard = [NSKeyedUnarchiver unarchiveObjectWithData:currentBoardBuffer];
@@ -363,7 +380,10 @@
     
     [self findOptions:levelBoard :levelMoves :levelJumps :player];
     
-    if ([self terminalTest:level] && [levelJumps count] == 0) return [self utility:levelBoard];
+    if ([self terminalTest:level] && [levelJumps count] == 0) {
+        if ([player isEqualToString:@"red"]) return [self expert:levelBoard :player];
+        else if ([player isEqualToString:@"white"]) return [self random:levelBoard];
+    }
 
     if ([levelJumps count] != 0) 
     {
@@ -411,8 +431,11 @@
     
     int value = beta;
     
-    if ([self terminalTest:level] && [levelJumps count] == 0) return [self utility:levelBoard];
-
+    if ([self terminalTest:level] && [levelJumps count] == 0) {
+        if ([player isEqualToString:@"red"]) return [self expert:levelBoard :player];
+        else if ([player isEqualToString:@"white"]) return [self random:board];
+    }
+    
     if ([player isEqualToString:@"red"]) [self findOptions:levelBoard :levelMoves :levelJumps :@"white"];
     else if ([player isEqualToString:@"white"]) [self findOptions:levelBoard :levelMoves :levelJumps :@"red"];
 
@@ -458,9 +481,220 @@
     else return FALSE; 
 }
 
-- (int)utility:(NSMutableArray *)board
+#pragma mark - method(s) for evaluation
+
+- (int)random:(NSMutableArray *)board
 {
-    int value = arc4random() % 9;
+    int value = arc4random() % 50;
+    return value;
+}
+
+- (int)regularPiecesCount:(NSMutableArray *)board :(NSString *)player
+{
+    int redPieces = 0;
+    int whitePieces = 0;
+    
+    for (int a = 0; a <= 7; a++) 
+    {
+        for (int b = 0; b <= 7; b++) 
+        {
+            if ((a + b) % 2 == 1) 
+            {
+                Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
+                
+                if ([piece.type isEqualToString:@"red"]) redPieces++;
+                else if ([piece.type isEqualToString:@"white"]) whitePieces++;
+            }
+        }
+    }
+    
+    int value;
+    
+    if ([player isEqualToString:@"red"]) value = redPieces - whitePieces;
+    else if ([player isEqualToString:@"white"]) value = whitePieces - redPieces;
+    
+    return value;
+}
+
+- (int)kingPiecesCount:(NSMutableArray *)board :(NSString *)player
+{
+    int redPieces = 0;
+    int whitePieces = 0;
+    
+    for (int a = 0; a <= 7; a++) 
+    {
+        for (int b = 0; b <= 7; b++) 
+        {
+            if ((a + b) % 2 == 1) 
+            {
+                Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
+                
+                if ([piece.type isEqualToString:@"red king"]) redPieces++;
+                else if ([piece.type isEqualToString:@"white king"]) whitePieces++;
+            }
+        }
+    }
+    
+    int value;
+    
+    if ([player isEqualToString:@"red"]) value = redPieces - whitePieces;
+    else if ([player isEqualToString:@"white"]) value = whitePieces - redPieces;
+    
+    return value;
+}
+
+- (int)defenseOverall:(NSMutableArray *)board :(NSString *)player
+{
+    int redPieces = 0;
+    int whitePieces = 0;
+    
+    for (int a = 0; a <= 7; a++) 
+    {
+        for (int b = 0; b <= 7; b++) 
+        {
+            if ((a + b) % 2 == 1) 
+            {
+                Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
+                
+                [self neighbors:board :piece];
+                
+                for (NSString *neighbor in piece.neighbors)
+                {
+                    if (![neighbor isEqualToString:@""])
+                    {
+                        if ([piece.player isEqualToString:@"red"]) {
+                            if ([[neighbor substringWithRange:NSMakeRange(0, 3)] isEqualToString:@"red"]) redPieces++;
+                        } else if ([piece.player isEqualToString:@"white"]) {
+                            if ([[neighbor substringWithRange:NSMakeRange(0, 5)] isEqualToString:@"white"]) whitePieces++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    int value;
+    
+    if ([player isEqualToString:@"red"]) value = redPieces - whitePieces;
+    else if ([player isEqualToString:@"white"]) value = whitePieces - redPieces;
+    
+    return value;
+}
+
+- (int)defenseAgainstKings:(NSMutableArray *)board :(NSString *)player
+{
+    int redRegularPieces = 0;
+    int whiteRegularPieces = 0;
+    
+    for (int a = 0; a <= 7; a++) 
+    {
+        for (int b = 0; b <= 7; b++) 
+        {
+            if ((a + b) % 2 == 1) 
+            {
+                Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
+                
+                [self neighbors:board :piece];
+                
+                for (NSString *neighbor in piece.neighbors)
+                {
+                    if (![neighbor isEqualToString:@""])
+                    {
+                        if ([piece.player isEqualToString:@"red"]) {
+                            if ([[neighbor substringWithRange:NSMakeRange(0, 3)] isEqualToString:@"red"]) redRegularPieces++;
+                        } else if ([piece.player isEqualToString:@"white"]) {
+                            if ([[neighbor substringWithRange:NSMakeRange(0, 5)] isEqualToString:@"white"]) whiteRegularPieces++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    int redKingPieces = 0;
+    int whiteKingPieces = 0;
+    
+    for (int a = 0; a <= 7; a++) 
+    {
+        for (int b = 0; b <= 7; b++) 
+        {
+            if ((a + b) % 2 == 1) 
+            {
+                Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
+                
+                if ([piece.type isEqualToString:@"red king"]) redKingPieces++;
+                else if ([piece.type isEqualToString:@"white king"]) whiteKingPieces++;
+            }
+        }
+    }
+    
+    int value;
+    
+    if ([player isEqualToString:@"red"]) value = redRegularPieces * whiteKingPieces;
+    else if ([player isEqualToString:@"white"]) value = whiteRegularPieces * redKingPieces;
+    
+    return value;
+}
+
+- (int)defenseOnSides:(NSMutableArray *)board :(NSString *)player
+{
+    int redPieces = 0;
+    int whitePieces = 0;
+    
+    for (int a = 0; a <= 7; a++) 
+    {
+        for (int b = 0; b <= 7; b++) 
+        {
+            if ((a + b) % 2 == 1) 
+            {
+                Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
+                
+                if (b == 0 || b == 7)
+                {
+                    if ([piece.type isEqualToString:@"red"]) redPieces++;
+                    else if ([piece.type isEqualToString:@"white"]) whitePieces++;
+                }
+            }
+        }
+    }
+    
+    int value;
+    
+    if ([player isEqualToString:@"red"]) value = redPieces - whitePieces;
+    else if ([player isEqualToString:@"white"]) value = whitePieces - redPieces;
+    
+    return value;
+}
+
+- (int)optionsCount:(NSMutableArray *)board :(NSString *)player
+{
+    NSMutableArray *playerMoves = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *playerJumps = [[[NSMutableArray alloc] init] autorelease];
+    
+    [self findOptions:board :playerMoves :playerJumps :player];
+    
+    NSString *opponent = @"";
+    
+    if ([player isEqualToString:@"red"]) opponent = @"white";
+    else if ([player isEqualToString:@"white"]) opponent = @"red";
+    
+    NSMutableArray *opponentMoves = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *opponentJumps = [[[NSMutableArray alloc] init] autorelease];
+    
+    [self findOptions:board :opponentMoves :opponentJumps :opponent];
+    
+    int value = (int)[playerMoves count] + ((int)[playerJumps count] * 2);
+    value -= (int)[opponentMoves count] + ((int)[opponentJumps count] * 2);
+    return value;
+}
+
+- (int)expert:(NSMutableArray *)board :(NSString *)player
+{
+    int value = ([self regularPiecesCount:board :player] * 4);
+    value += ([self kingPiecesCount:board :player] * 3);
+    value += ([self defenseOverall:board :player] * 8);
+    value += ([self defenseOnSides:board :player] * 4);
+    value += ([self optionsCount:board :player] * 13);
     return value;
 }
 

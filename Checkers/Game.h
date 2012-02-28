@@ -46,12 +46,20 @@
 - (void)makeMove:(NSMutableArray *)board :(NSMutableArray *)moves :(int)index;
 - (void)makeJump:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(int)index;
 
-- (void)saveCurrentState;
+- (void)setLimboObjects;
 - (int)alphaBetaSearch:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(NSString *)player;
 - (int)maxValue:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(NSString *)player :(int)level :(int)alpha :(int)beta;
 - (int)minValue:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(NSString *)player :(int)count :(int)alpha :(int)beta;
 - (BOOL)terminalTest:(int)count;
-- (int)utility:(NSMutableArray *)board;
+
+- (int)random:(NSMutableArray *)board;
+- (int)regularPiecesCount:(NSMutableArray *)board :(NSString *)player;
+- (int)kingPiecesCount:(NSMutableArray *)board :(NSString *)player;
+- (int)defenseOverall:(NSMutableArray *)board :(NSString *)player;
+- (int)defenseAgainstKings:(NSMutableArray *)board :(NSString *)player;
+- (int)defenseOnSides:(NSMutableArray *)board :(NSString *)player;
+- (int)optionsCount:(NSMutableArray *)board :(NSString *)player;
+- (int)expert:(NSMutableArray *)board :(NSString *)player;
 
 - (void)neighbors:(NSMutableArray *)board :(Piece *)piece;
 - (BOOL)handleKinging:(Piece *)piece;

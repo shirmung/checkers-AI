@@ -243,42 +243,42 @@
 - (void)evaluateOptions:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(NSString *)player
 {   
 //    if ([player isEqualToString:@"red"]) {
-//        [self setLimboObjects];
-//    
-//        int value = [self alphaBetaSearch:limboBoard :limboMoves :limboJumps :player];
-//        
-//        //NSLog(@"VALUE IS: %i", value);
-//        //NSLog(@"RATED OPTIONS ARE: %@", ratedOptions);
-//    
-//        int numberOfDigits = (int)[[NSString stringWithFormat:@"%i ", value] length];
-//    
-//        for (NSString *ratedOption in ratedOptions) 
-//        {
-//            if ([[ratedOption substringWithRange:NSMakeRange(0, numberOfDigits)] intValue] == value) 
-//            { 
-//                if (jumps.count != 0) [self makeJump:board :moves :jumps :(int)[ratedOptions indexOfObject:ratedOption]];
-//                else [self makeMove:board :moves :(int)[ratedOptions indexOfObject:ratedOption]];
-//            
-//                break;
-//            }
-//        }
-//    
-//        [ratedOptions removeAllObjects];
-//   } else if ([player isEqualToString:@"white"]) {
-        NSLog(@"OTHER PLAYERS JUMPS ARE: %@", jumps);
-        NSLog(@"OTHER PLAYERS MOVES ARE: %@", moves);
+        [self setLimboObjects];
+    
+        int value = [self alphaBetaSearch:limboBoard :limboMoves :limboJumps :player];
         
-        if ([jumps count] != 0) {
-            int userInput;
-            scanf("%i", &userInput);
+        NSLog(@"VALUE IS: %i", value);
+        NSLog(@"RATED OPTIONS ARE: %@", ratedOptions);
+    
+        int numberOfDigits = (int)[[NSString stringWithFormat:@"%i ", value] length];
+    
+        for (NSString *ratedOption in ratedOptions) 
+        {
+            if ([[ratedOption substringWithRange:NSMakeRange(0, numberOfDigits)] intValue] == value) 
+            { 
+                if (jumps.count != 0) [self makeJump:board :moves :jumps :(int)[ratedOptions indexOfObject:ratedOption]];
+                else [self makeMove:board :moves :(int)[ratedOptions indexOfObject:ratedOption]];
             
-            [self makeJump:board :moves :jumps :userInput];
-        } else {
-            int userInput;
-            scanf("%i", &userInput);
-            
-            [self makeMove:board :moves :userInput];
+                break;
+            }
         }
+    
+        [ratedOptions removeAllObjects];
+//   } else if ([player isEqualToString:@"white"]) {
+//        NSLog(@"OTHER PLAYERS JUMPS ARE: %@", jumps);
+//        NSLog(@"OTHER PLAYERS MOVES ARE: %@", moves);
+//        
+//        if ([jumps count] != 0) {
+//            int userInput;
+//            scanf("%i", &userInput);
+//            
+//            [self makeJump:board :moves :jumps :userInput];
+//        } else {
+//            int userInput;
+//            scanf("%i", &userInput);
+//            
+//            [self makeMove:board :moves :userInput];
+//        }
 //    }
 }
 
@@ -690,11 +690,12 @@
 
 - (int)expert:(NSMutableArray *)board :(NSString *)player
 {
-    int value = ([self regularPiecesCount:board :player] * 4);
-    value += ([self kingPiecesCount:board :player] * 3);
-    value += ([self defenseOverall:board :player] * 8);
-    value += ([self defenseOnSides:board :player] * 4);
-    value += ([self optionsCount:board :player] * 13);
+    int value = ([self regularPiecesCount:board :player] * 8);
+    value += ([self kingPiecesCount:board :player] * 13);
+    value += ([self defenseOverall:board :player] * 4);
+    value += ([self defenseAgainstKings:board :player] * 1);
+    value += ([self defenseOnSides:board :player] * 10);
+    value += ([self optionsCount:board :player] * 5);
     return value;
 }
 

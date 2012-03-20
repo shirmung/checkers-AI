@@ -3,7 +3,7 @@
 //  Checkers
 //
 //  Created by Shirmung Bielefeld on 1/29/12.
-//  Copyright (c) 2012 NYU. All rights reserved.
+//  Copyright (c) 2012. All rights reserved.
 //
 
 #import "Piece.h"
@@ -20,8 +20,7 @@
 {
     self = [super init];
     
-    if (self) 
-    {        
+    if (self) {        
         neighbors = [[NSMutableArray alloc] init];
     }
     
@@ -51,8 +50,7 @@
 
 - (id)initWithCoder:(NSCoder *)decoder 
 {
-    if (self = [super init]) 
-    {
+    if (self = [super init]) {
         self.player = [decoder decodeObjectForKey:@"player"];
         self.type = [decoder decodeObjectForKey:@"type"];
         self.a = [decoder decodeObjectForKey:@"a"];

@@ -124,7 +124,7 @@
 		C125EF9F14DA05D3005796D8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = C125EFA214DA05D3005796D8 /* Build configuration list for PBXProject "Checkers" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -239,6 +239,7 @@
 				C125EFB914DA05D3005796D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

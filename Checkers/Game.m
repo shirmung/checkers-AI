@@ -3,7 +3,7 @@
 //  Checkers
 //
 //  Created by Shirmung Bielefeld on 1/29/12.
-//  Copyright (c) 2012 NYU. All rights reserved.
+//  Copyright (c) 2012. All rights reserved.
 //
 
 #import "Game.h"
@@ -21,8 +21,7 @@
 {
     self = [super init];
     
-    if (self) 
-    {
+    if (self) {
         currentBoard  = [[NSMutableArray alloc] init];
         currentMoves = [[NSMutableArray alloc] init];
         currentJumps = [[NSMutableArray alloc] init];
@@ -55,12 +54,10 @@
 
 - (void)initializeBoard:(NSMutableArray *)board
 {
-    for (int a = 0; a <= 7; a++)
-    {
+    for (int a = 0; a <= 7; a++) {
         NSMutableArray *row = [[NSMutableArray alloc] init];
         
-        for (int b = 0; b <= 7; b++) 
-        {
+        for (int b = 0; b <= 7; b++) {
             Piece *piece = [[[Piece alloc] init] autorelease];
             
             piece.player = @"empty";
@@ -75,12 +72,9 @@
         [board addObject:row];
 	}
     
-    for (int a = 0; a <= 7; a++)
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 if (a == 0 || a == 1 || a == 2) {
                     Piece *piece = [[[Piece alloc] init] autorelease];
                     
@@ -127,18 +121,15 @@
 
 - (void)simulateGame:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps
 {
-    for (int m = 1; m <= 100; m++) 
-    {
-        if (gameOver == FALSE)
-        {
+    for (int m = 1; m <= 100; m++) {
+        if (gameOver == FALSE) {
             [self expandOut:board :moves :jumps :@"red"];
             
             [moves removeAllObjects];
             [jumps removeAllObjects];
         }
         
-        if (gameOver == FALSE)
-        {
+        if (gameOver == FALSE) {
             [self expandOut:board :moves :jumps :@"white"];
             
             [moves removeAllObjects];
@@ -166,12 +157,9 @@
 
 - (void)findOptions:(NSMutableArray *)board :(NSMutableArray *)moves :(NSMutableArray *)jumps :(NSString *)player
 {
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
                 if ([piece.player isEqualToString:player]) [self exploitOptions:board :moves :jumps :piece];
@@ -184,26 +172,21 @@
 {
     [self neighbors:board :piece];
 
-    if ([piece.type isEqualToString:[NSString stringWithFormat:@"%@ king", piece.player]]) 
-    {
-        if (![[piece.neighbors objectAtIndex:[piece.rightBack intValue]] isEqualToString:@""]) 
-        {
+    if ([piece.type isEqualToString:[NSString stringWithFormat:@"%@ king", piece.player]]) {
+        if (![[piece.neighbors objectAtIndex:[piece.rightBack intValue]] isEqualToString:@""]) {
             [self checkOptions:board :moves :jumps :[piece.neighbors objectAtIndex:[piece.rightBack intValue]] :piece :[piece.right intValue] :TRUE];
         }
             
-        if (![[piece.neighbors objectAtIndex:[piece.leftBack intValue]] isEqualToString:@""]) 
-        {
+        if (![[piece.neighbors objectAtIndex:[piece.leftBack intValue]] isEqualToString:@""]) {
             [self checkOptions:board :moves :jumps :[piece.neighbors objectAtIndex:[piece.leftBack intValue]] :piece :[piece.left intValue] :TRUE];
         }
     }
         
-    if (![[piece.neighbors objectAtIndex:[piece.rightFront intValue]] isEqualToString:@""]) 
-    {
+    if (![[piece.neighbors objectAtIndex:[piece.rightFront intValue]] isEqualToString:@""]) {
         [self checkOptions:board :moves :jumps :[piece.neighbors objectAtIndex:[piece.rightFront intValue]] :piece :[piece.right intValue] :FALSE];
     }
         
-    if (![[piece.neighbors objectAtIndex:[piece.leftFront intValue]] isEqualToString:@""])
-    {
+    if (![[piece.neighbors objectAtIndex:[piece.leftFront intValue]] isEqualToString:@""]) {
         [self checkOptions:board :moves :jumps :[piece.neighbors objectAtIndex:[piece.leftFront intValue]] :piece :[piece.left intValue] :FALSE];
     }
 }
@@ -226,12 +209,10 @@
         if (diagonal == 0) bb = [piece.b intValue] - 2;
         else if (diagonal == 1) bb = [piece.b intValue] + 2;
 
-        if (aa >= 0 && aa <= 7 && bb >= 0 && bb <= 7) 
-        {
+        if (aa >= 0 && aa <= 7 && bb >= 0 && bb <= 7) {
             Piece *questionablePiece = [[board objectAtIndex:aa] objectAtIndex:bb]; 
                         
-            if ([questionablePiece.type isEqualToString:@"empty"]) 
-            {
+            if ([questionablePiece.type isEqualToString:@"empty"]) {
                 [jumps addObject:[NSString stringWithFormat:@"%i,%i jump over %@ to %i,%i", [piece.a intValue], [piece.b intValue], tag, aa, bb]];
             }
         }
@@ -252,10 +233,8 @@
     
         int numberOfDigits = (int)[[NSString stringWithFormat:@"%i ", value] length];
     
-        for (NSString *ratedOption in ratedOptions) 
-        {
-            if ([[ratedOption substringWithRange:NSMakeRange(0, numberOfDigits)] intValue] == value) 
-            { 
+        for (NSString *ratedOption in ratedOptions) {
+            if ([[ratedOption substringWithRange:NSMakeRange(0, numberOfDigits)] intValue] == value) { 
                 if (jumps.count != 0) [self makeJump:board :moves :jumps :(int)[ratedOptions indexOfObject:ratedOption]];
                 else [self makeMove:board :moves :(int)[ratedOptions indexOfObject:ratedOption]];
             
@@ -385,10 +364,8 @@
         else if ([player isEqualToString:@"white"]) return [self random:levelBoard];
     }
 
-    if ([levelJumps count] != 0) 
-    {
-        while ([levelJumps count] != 0) 
-        {
+    if ([levelJumps count] != 0) {
+        while ([levelJumps count] != 0) {
             [self makeJump:levelBoard :levelMoves :levelJumps :0];
         
             value = MAX(value, [self minValue:levelBoard :levelMoves :levelJumps :player :(level + 1) :alpha :beta]);
@@ -402,8 +379,7 @@
             alpha = MAX(alpha, value);
         }
     } else {
-        while ([levelMoves count] != 0)
-        {
+        while ([levelMoves count] != 0) {
             [self makeMove:levelBoard :levelMoves :0];
         
             value = MAX(value, [self minValue:levelBoard :levelMoves :jumps :player :(level + 1) :alpha :beta]);
@@ -439,10 +415,8 @@
     if ([player isEqualToString:@"red"]) [self findOptions:levelBoard :levelMoves :levelJumps :@"white"];
     else if ([player isEqualToString:@"white"]) [self findOptions:levelBoard :levelMoves :levelJumps :@"red"];
 
-    if ([levelJumps count] != 0) 
-    {
-        while ([levelJumps count] != 0) 
-        {
+    if ([levelJumps count] != 0) {
+        while ([levelJumps count] != 0) {
             [self makeJump:levelBoard :levelMoves :levelJumps :0];
 
             value = MIN(value, [self maxValue:levelBoard :levelMoves :levelJumps :player :(level + 1) :alpha :beta]);
@@ -456,8 +430,7 @@
             beta = MIN(beta, value);
         }
     } else {
-        while ([levelMoves count] != 0)
-        {
+        while ([levelMoves count] != 0) {
             [self makeMove:levelBoard :levelMoves :0];
             
             value = MIN(value, [self maxValue:levelBoard :levelMoves :levelJumps :player :(level + 1) :alpha :beta]);
@@ -494,12 +467,9 @@
     int redPieces = 0;
     int whitePieces = 0;
     
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
                 if ([piece.type isEqualToString:@"red"]) redPieces++;
@@ -521,12 +491,9 @@
     int redPieces = 0;
     int whitePieces = 0;
     
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
                 if ([piece.type isEqualToString:@"red king"]) redPieces++;
@@ -548,20 +515,15 @@
     int redPieces = 0;
     int whitePieces = 0;
     
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
                 [self neighbors:board :piece];
                 
-                for (NSString *neighbor in piece.neighbors)
-                {
-                    if (![neighbor isEqualToString:@""])
-                    {
+                for (NSString *neighbor in piece.neighbors) {
+                    if (![neighbor isEqualToString:@""]) {
                         if ([piece.player isEqualToString:@"red"]) {
                             if ([[neighbor substringWithRange:NSMakeRange(0, 3)] isEqualToString:@"red"]) redPieces++;
                         } else if ([piece.player isEqualToString:@"white"]) {
@@ -586,20 +548,15 @@
     int redRegularPieces = 0;
     int whiteRegularPieces = 0;
     
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
                 [self neighbors:board :piece];
                 
-                for (NSString *neighbor in piece.neighbors)
-                {
-                    if (![neighbor isEqualToString:@""])
-                    {
+                for (NSString *neighbor in piece.neighbors) {
+                    if (![neighbor isEqualToString:@""]) {
                         if ([piece.player isEqualToString:@"red"]) {
                             if ([[neighbor substringWithRange:NSMakeRange(0, 3)] isEqualToString:@"red"]) redRegularPieces++;
                         } else if ([piece.player isEqualToString:@"white"]) {
@@ -614,12 +571,9 @@
     int redKingPieces = 0;
     int whiteKingPieces = 0;
     
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
                 if ([piece.type isEqualToString:@"red king"]) redKingPieces++;
@@ -641,16 +595,12 @@
     int redPieces = 0;
     int whitePieces = 0;
     
-    for (int a = 0; a <= 7; a++) 
-    {
-        for (int b = 0; b <= 7; b++) 
-        {
-            if ((a + b) % 2 == 1) 
-            {
+    for (int a = 0; a <= 7; a++) {
+        for (int b = 0; b <= 7; b++) {
+            if ((a + b) % 2 == 1) {
                 Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
-                if (b == 0 || b == 7)
-                {
+                if (b == 0 || b == 7) {
                     if ([piece.type isEqualToString:@"red"]) redPieces++;
                     else if ([piece.type isEqualToString:@"white"]) whitePieces++;
                 }
@@ -739,8 +689,7 @@
 
 - (BOOL)handleKinging:(Piece *)piece
 {
-    if (![piece.type isEqualToString:[NSString stringWithFormat:@"%@ king", piece.player]])
-    {
+    if (![piece.type isEqualToString:[NSString stringWithFormat:@"%@ king", piece.player]]) {
         if ([piece.a intValue] == 0 && [piece.player isEqualToString:@"white"]) {
             piece.type = [NSString stringWithFormat:@"%@ king", piece.player];
             
@@ -766,12 +715,10 @@
 
 - (void)printBoard:(NSMutableArray *)board
 {
-    for (int a = 0; a <= 7; a++) 
-    {
+    for (int a = 0; a <= 7; a++) {
         NSLog(@"row: %i", a);
         
-        for (int b = 0; b <= 7; b++) 
-        {
+        for (int b = 0; b <= 7; b++) {
             Piece *piece = [[board objectAtIndex:a] objectAtIndex:b];
                 
             NSLog(@"    %@", piece.type);

@@ -3,7 +3,7 @@
 //  Checkers
 //
 //  Created by Shirmung Bielefeld on 1/29/12.
-//  Copyright (c) 2012 NYU. All rights reserved.
+//  Copyright (c) 2012. All rights reserved.
 //
 
 @class Piece;
